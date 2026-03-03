@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>US–Israel Strikes on Iran: Balanced Overview</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #f5f4f0;
+      color: #2c2c2c;
+      line-height: 1.75;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 40px 24px 32px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin-bottom: 8px;
+    }
+
+    header p.subtitle {
+      font-size: 0.95rem;
+      color: #b0afc0;
+      font-style: italic;
+    }
+
+    .top-bar {
+      background: #12122a;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .last-updated {
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      color: #8888aa;
+    }
+
+    .last-updated span {
+      color: #aab2ff;
+      font-weight: 600;
+    }
+
+    .top-bar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-update {
+      background: #3949ab;
+      color: #fff;
+    }
+
+    .btn-update:hover { background: #5c6bc0; }
+
+    .btn-history {
+      background: transparent;
+      color: #8888aa;
+      border: 1px solid #3a3a5c;
+    }
+
+    .btn-history:hover { color: #fff; border-color: #8888aa; }
+
+    .disclaimer {
+      background: #fff8e1;
+      border-left: 4px solid #f9a825;
+      margin: 28px auto;
+      max-width: 860px;
+      padding: 14px 20px;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      color: #5a4a00;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    section.context {
+      background: #fff;
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    }
+
+    section.context h2 {
+      font-size: 1.15rem;
+      color: #1a1a2e;
+      margin-bottom: 14px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 8px;
+    }
+
+    section.context p {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 640px) {
+      .columns { grid-template-columns: 1fr; }
+      header h1 { font-size: 1.4rem; }
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 24px 26px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    }
+
+    .card.pros { border-top: 4px solid #2e7d32; }
+    .card.cons { border-top: 4px solid #c62828; }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 18px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card.pros h2 { color: #2e7d32; }
+    .card.cons h2 { color: #c62828; }
+
+    .point {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .point-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      margin-top: 2px;
+      color: #fff;
+    }
+
+    .pros .point-icon { background: #2e7d32; }
+    .cons .point-icon { background: #c62828; }
+
+    .point-text h3 {
+      font-size: 0.93rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #1a1a2e;
+    }
+
+    .point-text p {
+      font-size: 0.88rem;
+      color: #444;
+    }
+
+    /* ── Expert Consensus Meter ── */
+    .consensus-section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    }
+
+    .consensus-section h2 {
+      font-size: 1.15rem;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 8px;
+    }
+
+    .consensus-meta {
+      font-size: 0.82rem;
+      color: #777;
+      margin-bottom: 22px;
+      font-style: italic;
+    }
+
+    .meter-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      font-family: sans-serif;
+    }
+
+    .meter-labels span:first-child { color: #2e7d32; }
+    .meter-labels span:last-child  { color: #c62828; }
+
+    .meter-track {
+      position: relative;
+      height: 22px;
+      border-radius: 11px;
+      background: linear-gradient(to right, #2e7d32, #f9a825 48%, #c62828);
+      margin-bottom: 6px;
+    }
+
+    .meter-marker {
+      position: absolute;
+      top: 50%;
+      left: var(--meter-position, 70%);
+      transform: translate(-50%, -50%);
+      width: 18px;
+      height: 28px;
+      background: #1a1a2e;
+      border-radius: 3px;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+
+    .meter-marker::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 8px solid #1a1a2e;
+    }
+
+    .meter-value-label {
+      text-align: center;
+      margin-top: 14px;
+      font-family: sans-serif;
+    }
+
+    .meter-value-label .verdict {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #b34700;
+    }
+
+    .meter-value-label .verdict-sub {
+      font-size: 0.82rem;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    .consensus-breakdown {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #eee;
+    }
+
+    .breakdown-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-family: sans-serif;
+      font-weight: 600;
+    }
+
+    .breakdown-chip.support { background: #e8f5e9; color: #1b5e20; }
+    .breakdown-chip.neutral { background: #e3f2fd; color: #0d47a1; }
+    .breakdown-chip.critical { background: #fce4ec; color: #b71c1c; }
+
+    .breakdown-chip .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .breakdown-chip.support .dot { background: #2e7d32; }
+    .breakdown-chip.neutral .dot { background: #1565c0; }
+    .breakdown-chip.critical .dot { background: #c62828; }
+
+    .breakdown-label {
+      font-size: 0.78rem;
+      color: #888;
+      margin-top: 8px;
+      font-family: sans-serif;
+      font-style: italic;
+    }
+
+    .reactions-section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    }
+
+    .reactions-section h2 {
+      font-size: 1.15rem;
+      color: #1a1a2e;
+      margin-bottom: 18px;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 8px;
+    }
+
+    .reactions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .reaction-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-size: 0.87rem;
+    }
+
+    .reaction-card .entity {
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+      font-size: 0.9rem;
+    }
+
+    .reaction-card .stance {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: bold;
+      border-radius: 20px;
+      padding: 1px 8px;
+      margin-bottom: 6px;
+    }
+
+    .stance.critical { background: #fce4ec; color: #b71c1c; }
+    .stance.supportive { background: #e8f5e9; color: #1b5e20; }
+    .stance.neutral { background: #e3f2fd; color: #0d47a1; }
+
+    .sources-section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 24px 28px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+      font-size: 0.83rem;
+    }
+
+    .sources-section h2 {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 6px;
+    }
+
+    .sources-section a {
+      color: #1565c0;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .sources-section a:hover { text-decoration: underline; }
+
+    .date-badge {
+      display: inline-block;
+      background: #e8eaf6;
+      color: #3949ab;
+      font-size: 0.78rem;
+      padding: 2px 10px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      font-family: sans-serif;
+    }
+
+    .note {
+      background: #f3f3f3;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 0.87rem;
+      color: #555;
+      margin-top: 28px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>US–Israel Strikes on Iran: A Balanced Overview</h1>
+  <p class="subtitle">Arguments For and Against — presented without political bias</p>
+</header>
+
+<!-- TOP BAR: last updated + buttons -->
+<div class="top-bar">
+  <div class="last-updated">
+    Last updated: <span id="last-updated-date"><!-- LAST_UPDATED --></span>
+  </div>
+  <div class="top-bar-right">
+    <a class="btn btn-history" href="history/index.html">📅 View History</a>
+    <a class="btn btn-update" href="https://github.com/jordanrobertjones/iran-conflict-tracker/actions/workflows/update.yml" target="_blank">🔄 Update Now</a>
+  </div>
+</div>
+
+<main>
+
+  <div class="disclaimer">
+    ⚠️ <strong>Note:</strong> This document presents arguments made by various analysts, governments, and experts on both sides. It does not advocate for any position. Content is automatically refreshed daily at 5 AM Mountain Time.
+  </div>
+
+  <!-- BACKGROUND -->
+  <section class="context">
+    <h2>📋 What Happened — Background</h2>
+    <span class="date-badge">February 28, 2026</span>
+
+    <!-- BEGIN_BACKGROUND -->
+    <p>On <strong>February 28, 2026</strong>, the United States and Israel launched coordinated airstrikes against Iran in a joint operation codenamed <em>Operation Epic Fury</em> (U.S.) and <em>Operation Roaring Lion</em> (Israel). The strikes targeted nuclear facilities, ballistic missile infrastructure, radar installations, and military leadership. Iranian Supreme Leader <strong>Ali Khamenei was killed</strong> in the attacks.</p>
+
+    <p>Iran responded with missile and drone counterstrikes targeting Israel, Bahrain, Saudi Arabia, Qatar, the UAE, and Iraq. Air traffic across the region ground to a halt, and Strait of Hormuz shipping flows began to slow.</p>
+
+    <p><strong>Key context leading up to the strikes:</strong></p>
+    <p>The June 2025 "12-Day War" — in which Israel struck Iranian nuclear sites and Iran retaliated — had already established direct military conflict between the two countries. Following that war, Iran experienced massive anti-government protests starting in late December 2025 amid economic collapse. US–Iran nuclear negotiations mediated by Oman collapsed just two days before the February strikes.</p>
+    <!-- END_BACKGROUND -->
+  </section>
+
+  <!-- PROS / CONS COLUMNS -->
+  <div class="columns">
+
+    <!-- PROS -->
+    <div class="card pros">
+      <h2>✅ Arguments <em>For</em> the War</h2>
+
+      <!-- BEGIN_PROS -->
+      <div class="point">
+        <div class="point-icon">1</div>
+        <div class="point-text">
+          <h3>Nuclear Threat Neutralized (For Now)</h3>
+          <p>Supporters argue that Iran was actively reviving its nuclear weapons program. Strikes on Natanz, Fordow, and Esfahan are seen as having set back Iran's ability to develop a nuclear bomb — removing a major regional and global security threat.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">2</div>
+        <div class="point-text">
+          <h3>Weakening of Iranian Military Power</h3>
+          <p>Iran's ballistic missile infrastructure and air defense systems were significantly degraded. Combined with losses in the June 2025 war, Iran's capacity to threaten Israel and U.S. bases in the region has been reduced.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">3</div>
+        <div class="point-text">
+          <h3>Iran's "Axis of Resistance" Already Weakened</h3>
+          <p>Hezbollah and Hamas were decimated in 2024–25. Syria's Assad regime had already fallen. Proponents argue that this was a strategic window to act while Iran was at its most isolated, with fewer proxy forces to retaliate through.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">4</div>
+        <div class="point-text">
+          <h3>Potential for Regime Change &amp; Iranian Freedom</h3>
+          <p>With massive protests already destabilizing the Iranian government before the strikes, some argue the military action could accelerate regime collapse — potentially leading to a freer Iran that no longer sponsors terrorism or pursues nuclear weapons.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">5</div>
+        <div class="point-text">
+          <h3>Self-Defense Framing</h3>
+          <p>Israel characterized the strikes as "preemptive" — acting before Iran could reconstitute its nuclear program. Under international law, anticipatory self-defense is a contested but recognized doctrine when a threat is imminent and credible.</p>
+        </div>
+      </div>
+      <!-- END_PROS -->
+    </div>
+
+    <!-- CONS -->
+    <div class="card cons">
+      <h2>❌ Arguments <em>Against</em> the War</h2>
+
+      <!-- BEGIN_CONS -->
+      <div class="point">
+        <div class="point-icon">1</div>
+        <div class="point-text">
+          <h3>Diplomacy Was Abandoned at a Critical Moment</h3>
+          <p>US–Iran nuclear negotiations in Geneva had just concluded — without a deal, but with talks ongoing. The UN Secretary-General said the strikes "squandered an opportunity for diplomacy." Critics argue the U.S. attacked while still at the negotiating table.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">2</div>
+        <div class="point-text">
+          <h3>Risk of Wider Regional War</h3>
+          <p>Iran's retaliatory strikes hit six countries — Israel, Bahrain, Saudi Arabia, Qatar, the UAE, and Iraq. Analysts warn this conflict is "existential" for the Iranian regime and unlikely to end quickly, raising the risk of a broader, prolonged war drawing in multiple nations.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">3</div>
+        <div class="point-text">
+          <h3>Bombing Rarely Produces Regime Change</h3>
+          <p>Experts note that "the decapitation theory has almost no historical support." Populations tend to rally behind their governments under external attack — even when they oppose those governments. The parallel to the 2003 Iraq War is widely cited as a cautionary example.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">4</div>
+        <div class="point-text">
+          <h3>Questions of International Law</h3>
+          <p>Norway's Foreign Minister stated the strikes "are not in line with international law." Russia called them an "unprovoked act of armed aggression against a sovereign state." The UN Security Council convened in emergency session. Iran had not attacked the U.S. directly before the strikes.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">5</div>
+        <div class="point-text">
+          <h3>Nuclear Proliferation Risk</h3>
+          <p>EU analysts warned of "a dangerous nuclear proliferation cascade." Other countries observing these events may conclude that the only way to deter U.S. or Israeli military action is to develop nuclear weapons as quickly as possible — potentially making the world less safe long-term.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-icon">6</div>
+        <div class="point-text">
+          <h3>Damage to U.S. Diplomatic Credibility</h3>
+          <p>Critics argue that attacking a country while in active negotiations signals to future adversaries that U.S. diplomacy cannot be trusted. This may make it harder to negotiate with North Korea, China, or other rivals in the future.</p>
+        </div>
+      </div>
+      <!-- END_CONS -->
+    </div>
+  </div>
+
+  <!-- EXPERT CONSENSUS METER -->
+  <div class="consensus-section">
+    <h2>📊 Expert &amp; International Consensus Meter</h2>
+    <p class="consensus-meta">
+      Based on reactions from governments, international bodies, and independent think tanks (CFR, Chatham House, Stimson Center, UN). This reflects where the preponderance of expert and official opinion falls — not a moral verdict.
+    </p>
+
+    <div class="meter-labels">
+      <span>← Broadly Supported</span>
+      <span>Broadly Opposed →</span>
+    </div>
+
+    <!-- METER_POSITION: 70% -->
+    <div class="meter-track">
+      <div class="meter-marker" style="left: 70%;"></div>
+    </div>
+
+    <!-- BEGIN_CONSENSUS_VERDICT -->
+    <div class="meter-value-label">
+      <div class="verdict">Leaning Opposed (~70%)</div>
+      <div class="verdict-sub">The majority of international governments and independent analysts have expressed concern or opposition. Supporters are largely limited to the U.S. and Israel.</div>
+    </div>
+    <!-- END_CONSENSUS_VERDICT -->
+
+    <!-- BEGIN_CONSENSUS_BREAKDOWN -->
+    <div class="consensus-breakdown">
+      <div class="breakdown-chip support"><div class="dot"></div> Supportive: US, Israel</div>
+      <div class="breakdown-chip neutral"><div class="dot"></div> Neutral / Cautious: Turkey, Gulf States</div>
+      <div class="breakdown-chip critical"><div class="dot"></div> Critical / Opposed: UN, EU, Russia, Norway, Oman, North Korea + most think tanks</div>
+    </div>
+    <div class="breakdown-label">* North Korea's opposition is included for completeness but reflects geopolitical alignment rather than independent expert judgment.</div>
+    <!-- END_CONSENSUS_BREAKDOWN -->
+  </div>
+
+  <!-- INTERNATIONAL REACTIONS -->
+  <div class="reactions-section">
+    <h2>🌍 How the World Has Responded</h2>
+    <!-- BEGIN_REACTIONS -->
+    <div class="reactions-grid">
+
+      <div class="reaction-card">
+        <div class="entity">🇺🇳 United Nations</div>
+        <span class="stance critical">Critical</span>
+        <p>Secretary-General Guterres condemned the attacks and said both the strikes and Iranian retaliation "undermine international peace and security."</p>
+      </div>
+
+      <div class="reaction-card">
+        <div class="entity">🇹🇷 Turkey</div>
+        <span class="stance neutral">Neutral / Mediating</span>
+        <p>Turkey declined to take sides. Foreign Minister Fidan is leading a diplomatic push to secure a ceasefire and prevent Iran's total collapse.</p>
+      </div>
+
+      <div class="reaction-card">
+        <div class="entity">🇷🇺 Russia</div>
+        <span class="stance critical">Critical</span>
+        <p>Called the strikes "an unprovoked act of armed aggression against a sovereign Member State, in violation of the UN Charter."</p>
+      </div>
+
+      <div class="reaction-card">
+        <div class="entity">🇳🇴 Norway</div>
+        <span class="stance critical">Critical</span>
+        <p>Foreign Minister stated Israel's initial strikes "breached standards of international law" as a unilateral preventive action.</p>
+      </div>
+
+      <div class="reaction-card">
+        <div class="entity">🇪🇺 European Union</div>
+        <span class="stance critical">Cautious / Critical</span>
+        <p>Urged "maximum restraint." Security analysts warned of a "dangerous nuclear proliferation cascade" if diplomacy continues to collapse.</p>
+      </div>
+
+      <div class="reaction-card">
+        <div class="entity">🇸🇦 Gulf Arab States</div>
+        <span class="stance neutral">Concerned / Recalibrating</span>
+        <p>Hit by Iranian retaliatory strikes, Gulf states are recalculating their approach — likely moving toward greater deterrence through military capabilities rather than alliances.</p>
+      </div>
+
+      <div class="reaction-card">
+        <div class="entity">🇰🇵 North Korea</div>
+        <span class="stance critical">Critical</span>
+        <p>Foreign Ministry denounced the attacks as "a thoroughly illegal act of aggression and the most vile form of violation of sovereignty."</p>
+      </div>
+
+      <div class="reaction-card">
+        <div class="entity">🇴🇲 Oman (Mediator)</div>
+        <span class="stance critical">Concerned</span>
+        <p>Had mediated US–Iran nuclear talks. Warned the U.S. "not to get sucked in" further into the conflict following the collapse of negotiations.</p>
+      </div>
+
+    </div>
+    <!-- END_REACTIONS -->
+  </div>
+
+  <!-- WHAT'S UNKNOWN -->
+  <section class="context">
+    <h2>❓ What Remains Deeply Uncertain</h2>
+    <!-- BEGIN_UNCERTAIN -->
+    <p>Because this conflict is so recent, many critical questions remain unanswered:</p>
+    <p><strong>Who leads Iran now?</strong> With Khamenei killed, Iran's political succession is unclear. The identity and ideology of a new leadership will shape everything that follows.</p>
+    <p><strong>Will the protests turn into revolution?</strong> Iran was already experiencing its largest protests since 1979. It is unknown whether the strikes will rally Iranians around the remaining government or accelerate its collapse.</p>
+    <p><strong>How far will Iran retaliate?</strong> Iran struck six countries in its initial counterattack. Whether this escalates further — potentially drawing in more actors — remains to be seen.</p>
+    <p><strong>What happens to Iran's nuclear program?</strong> Even if facilities were destroyed, nuclear knowledge and personnel cannot be bombed away. How Iran rebuilds — or pursues a covert path — is unknown.</p>
+    <!-- END_UNCERTAIN -->
+  </section>
+
+  <div class="note">
+    This document is updated daily using publicly available reporting from the Council on Foreign Relations, Chatham House, the Stimson Center, Al Jazeera, UN News, and other sources. It is intended to inform, not persuade.
+  </div>
+
+  <!-- SOURCES -->
+  <div class="sources-section" style="margin-top: 24px;">
+    <h2>Sources</h2>
+    <!-- BEGIN_SOURCES -->
+    <a href="https://www.cfr.org/articles/gauging-the-impact-of-massive-u-s-israeli-strikes-on-iran" target="_blank">Council on Foreign Relations — Gauging the Impact of U.S.-Israeli Strikes on Iran</a>
+    <a href="https://www.chathamhouse.org/2026/02/us-and-israel-attack-iran-early-analysis-chatham-house-experts" target="_blank">Chatham House — US and Israel Attack Iran: Early Analysis</a>
+    <a href="https://www.stimson.org/2026/experts-react-what-the-epic-fury-iran-strikes-signal-to-the-world/" target="_blank">Stimson Center — What the Epic Fury Strikes Signal to the World</a>
+    <a href="https://news.un.org/en/story/2026/02/1167062" target="_blank">UN News — Iran Strikes "Squandered a Chance for Diplomacy": Guterres</a>
+    <a href="https://www.aljazeera.com/news/2026/2/28/world-reacts-to-us-israel-attack-on-iran-tehran-retaliation" target="_blank">Al Jazeera — World Reacts to US, Israel Attack on Iran</a>
+    <a href="https://en.wikipedia.org/wiki/2026_Israeli%E2%80%93United_States_strikes_on_Iran" target="_blank">Wikipedia — 2026 Israeli–United States Strikes on Iran</a>
+    <a href="https://www.atlanticcouncil.org/dispatches/experts-react-how-the-us-war-with-iran-is-playing-out-around-the-middle-east/" target="_blank">Atlantic Council — How the US War with Iran Is Playing Out</a>
+    <a href="https://www.britannica.com/event/Israel-Iran-conflict" target="_blank">Britannica — US-Israel-Iran Conflict (2025–26)</a>
+    <!-- END_SOURCES -->
+  </div>
+
+</main>
+
+</body>
+</html>

@@ -8,6 +8,7 @@ Uses Claude API with web search to refresh the page content.
 import os
 import re
 import json
+import html as html_module
 import shutil
 from datetime import datetime, timezone, timedelta
 
@@ -22,6 +23,22 @@ HISTORY_INDEX = os.path.join(HISTORY_DIR, "history_entries.json")
 MT = timezone(timedelta(hours=-7))  # Mountain Time (MDT, UTC-7)
 today = datetime.now(MT).strftime("%Y-%m-%d")
 today_display = datetime.now(MT).strftime("%B %d, %Y")
+
+# ── Security: sanitize HTML from LLM before injecting into pages ─────────────
+def sanitize_html(content: str) -> str:
+    """Remove dangerous HTML that could enable XSS attacks."""
+    if not isinstance(content, str):
+        return ""
+    # Strip <script>...</script> blocks (including multi-line)
+    content = re.sub(r'<script[\s\S]*?</script>', '', content, flags=re.IGNORECASE)
+    # Strip inline event handlers (onclick, onload, onerror, etc.)
+    content = re.sub(r'\s+on\w+\s*=\s*(?:"[^"]*"|\'[^\']*\'|[^\s>]*)', '', content, flags=re.IGNORECASE)
+    # Strip javascript: and data: URIs in href/src attributes
+    content = re.sub(r'(href|src)\s*=\s*["\']?\s*(javascript|data):[^"\'>\s]*["\']?', '', content, flags=re.IGNORECASE)
+    # Strip <iframe>, <object>, <embed>, <form> tags entirely
+    content = re.sub(r'<(iframe|object|embed|form|base|meta|link)[^>]*>[\s\S]*?</\1>', '', content, flags=re.IGNORECASE)
+    content = re.sub(r'<(iframe|object|embed|form|base|meta|link)[^>]*/?>',  '', content, flags=re.IGNORECASE)
+    return content
 
 # ── Claude call ──────────────────────────────────────────────────────────────
 client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
@@ -97,39 +114,44 @@ def replace_between(html, begin_tag, end_tag, new_content):
     replacement = rf'\1\n{new_content}\n\3'
     return re.sub(pattern, replacement, html)
 
-# Apply updates
+# Apply updates (all LLM-sourced HTML is sanitized before injection)
 if updates.get("background_update"):
-    html = replace_between(html, "<!-- BEGIN_BACKGROUND -->", "<!-- END_BACKGROUND -->", updates["background_update"])
+    html = replace_between(html, "<!-- BEGIN_BACKGROUND -->", "<!-- END_BACKGROUND -->", sanitize_html(updates["background_update"]))
 
 if updates.get("pros_update"):
-    html = replace_between(html, "<!-- BEGIN_PROS -->", "<!-- END_PROS -->", updates["pros_update"])
+    html = replace_between(html, "<!-- BEGIN_PROS -->", "<!-- END_PROS -->", sanitize_html(updates["pros_update"]))
 
 if updates.get("cons_update"):
-    html = replace_between(html, "<!-- BEGIN_CONS -->", "<!-- END_CONS -->", updates["cons_update"])
+    html = replace_between(html, "<!-- BEGIN_CONS -->", "<!-- END_CONS -->", sanitize_html(updates["cons_update"]))
 
 if updates.get("reactions_update"):
-    html = replace_between(html, "<!-- BEGIN_REACTIONS -->", "<!-- END_REACTIONS -->", updates["reactions_update"])
+    html = replace_between(html, "<!-- BEGIN_REACTIONS -->", "<!-- END_REACTIONS -->", sanitize_html(updates["reactions_update"]))
 
 if updates.get("uncertain_update"):
-    html = replace_between(html, "<!-- BEGIN_UNCERTAIN -->", "<!-- END_UNCERTAIN -->", updates["uncertain_update"])
+    html = replace_between(html, "<!-- BEGIN_UNCERTAIN -->", "<!-- END_UNCERTAIN -->", sanitize_html(updates["uncertain_update"]))
 
 if updates.get("sources_update"):
-    html = replace_between(html, "<!-- BEGIN_SOURCES -->", "<!-- END_SOURCES -->", updates["sources_update"])
+    html = replace_between(html, "<!-- BEGIN_SOURCES -->", "<!-- END_SOURCES -->", sanitize_html(updates["sources_update"]))
 
 if updates.get("consensus_position") is not None:
-    pos = updates["consensus_position"]
-    html = re.sub(r'<!-- METER_POSITION: \d+% -->', f'<!-- METER_POSITION: {pos}% -->', html)
-    html = re.sub(r'style="left: \d+%;"', f'style="left: {pos}%;"', html)
+    raw_pos = updates["consensus_position"]
+    # Validate it's an integer in 0-100 range before injecting into CSS
+    if isinstance(raw_pos, (int, float)) and 0 <= int(raw_pos) <= 100:
+        pos = int(raw_pos)
+        html = re.sub(r'<!-- METER_POSITION: \d+% -->', f'<!-- METER_POSITION: {pos}% -->', html)
+        html = re.sub(r'style="left: \d+%;"', f'style="left: {pos}%;"', html)
+    else:
+        print(f"WARNING: Skipping invalid consensus_position value: {raw_pos!r}")
 
 if updates.get("consensus_verdict"):
     verdict_html = f'''<div class="meter-value-label">
-      <div class="verdict">{updates["consensus_verdict"]}</div>
-      <div class="verdict-sub">{updates.get("consensus_verdict_sub", "")}</div>
+      <div class="verdict">{html_module.escape(str(updates["consensus_verdict"]))}</div>
+      <div class="verdict-sub">{html_module.escape(str(updates.get("consensus_verdict_sub", "")))}</div>
     </div>'''
     html = replace_between(html, "<!-- BEGIN_CONSENSUS_VERDICT -->", "<!-- END_CONSENSUS_VERDICT -->", verdict_html)
 
 if updates.get("consensus_breakdown"):
-    html = replace_between(html, "<!-- BEGIN_CONSENSUS_BREAKDOWN -->", "<!-- END_CONSENSUS_BREAKDOWN -->", updates["consensus_breakdown"])
+    html = replace_between(html, "<!-- BEGIN_CONSENSUS_BREAKDOWN -->", "<!-- END_CONSENSUS_BREAKDOWN -->", sanitize_html(updates["consensus_breakdown"]))
 
 # Update last-updated timestamp
 html = html.replace("<!-- LAST_UPDATED -->", today_display)
@@ -166,11 +188,15 @@ with open(HISTORY_INDEX, "w") as f:
 # Rebuild history/index.html
 snapshot_items = ""
 for entry in entries:
+    # Sanitize fields: date used in href (must be safe path), display/summary rendered as text
+    safe_date = re.sub(r'[^0-9\-]', '', str(entry["date"]))  # only digits and hyphens
+    safe_display = html_module.escape(str(entry["display"]))
+    safe_summary = html_module.escape(str(entry["summary"]))
     snapshot_items += f'''    <li>
-      <a href="{entry["date"]}.html">
+      <a href="{safe_date}.html">
         <div>
-          <div class="snap-date">{entry["display"]}</div>
-          <div class="snap-label">{entry["summary"]}</div>
+          <div class="snap-date">{safe_display}</div>
+          <div class="snap-label">{safe_summary}</div>
         </div>
         <span class="snap-arrow">→</span>
       </a>

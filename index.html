@@ -19,6 +19,39 @@
       color: #fff;
       padding: 40px 24px 32px;
       text-align: center;
+      position: relative;
+    }
+
+    .venmo-widget {
+      position: absolute;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+    }
+
+    .venmo-widget img {
+      width: 84px;
+      height: 84px;
+      border-radius: 6px;
+      background: #fff;
+      padding: 4px;
+    }
+
+    .venmo-widget span {
+      font-family: sans-serif;
+      font-size: 0.65rem;
+      color: #b0afc0;
+      max-width: 90px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 640px) {
+      .venmo-widget { display: none; }
     }
 
     header h1 {
@@ -423,6 +456,10 @@
 <body>
 
 <header>
+  <div class="venmo-widget">
+    <img src="venmo-qr.png" alt="Venmo QR Code" />
+    <span>support my next big idea with a small tip</span>
+  </div>
   <h1>US–Israel Strikes on Iran: A Balanced Overview</h1>
   <p class="subtitle">Arguments For and Against — presented without political bias</p>
 </header>

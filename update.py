@@ -136,6 +136,10 @@ html = html.replace("<!-- LAST_UPDATED -->", today_display)
 html = re.sub(r'Last updated: <span id="last-updated-date">[^<]*</span>',
               f'Last updated: <span id="last-updated-date">{today_display}</span>', html)
 
+# Update background section date badge to match last-updated date
+html = re.sub(r'(<section class="context">[\s\S]*?<span class="date-badge">)[^<]*(</span>)',
+              rf'\g<1>{today_display}\2', html)
+
 # ── Save main index.html ─────────────────────────────────────────────────────
 with open(INDEX_HTML, "w", encoding="utf-8") as f:
     f.write(html)

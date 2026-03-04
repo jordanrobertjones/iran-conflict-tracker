@@ -471,62 +471,9 @@
   </div>
   <div class="top-bar-right">
     <a class="btn btn-history" href="history/index.html">📅 View History</a>
-    <button class="btn btn-update" id="update-btn" onclick="triggerUpdate()">🔄 Update Now</button>
+    <a class="btn btn-update" href="https://github.com/jordanrobertjones/iran-conflict-tracker/actions/workflows/update.yml" target="_blank" onclick="alert('Want this page updated? Contact JoJo!')">🔄 Update Now</a>
   </div>
 </div>
-
-<script>
-  // Fine-Grained GitHub PAT — Actions: write scope only for this repo.
-  // Anyone who triggers this can only kick off the update workflow, nothing else.
-  const GITHUB_TOKEN = 'YOUR_GITHUB_TOKEN_HERE';
-  const REPO = 'jordanrobertjones/iran-conflict-tracker';
-
-  async function triggerUpdate() {
-    const btn = document.getElementById('update-btn');
-
-    // Client-side rate limit: once per 5 minutes
-    const lastTrigger = localStorage.getItem('lastUpdateTrigger');
-    if (lastTrigger && Date.now() - parseInt(lastTrigger) < 5 * 60 * 1000) {
-      const remaining = Math.ceil((5 * 60 * 1000 - (Date.now() - parseInt(lastTrigger))) / 60000);
-      alert('Please wait ' + remaining + ' more minute(s) before triggering another update.');
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = '⏳ Triggering…';
-
-    try {
-      const response = await fetch(
-        'https://api.github.com/repos/' + REPO + '/actions/workflows/update.yml/dispatches',
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer ' + GITHUB_TOKEN,
-            'Accept': 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ ref: 'main' })
-        }
-      );
-
-      if (response.status === 204) {
-        localStorage.setItem('lastUpdateTrigger', Date.now().toString());
-        btn.textContent = '✅ Update Started!';
-        setTimeout(() => { btn.textContent = '🔄 Update Now'; btn.disabled = false; }, 5000);
-        alert('Update triggered! The page will have new content in about 2–3 minutes. Reload to see changes.');
-      } else {
-        btn.textContent = '❌ Failed';
-        setTimeout(() => { btn.textContent = '🔄 Update Now'; btn.disabled = false; }, 3000);
-        alert('Could not trigger update (status ' + response.status + '). Check that the GitHub token is set correctly.');
-      }
-    } catch (err) {
-      btn.textContent = '❌ Error';
-      setTimeout(() => { btn.textContent = '🔄 Update Now'; btn.disabled = false; }, 3000);
-      alert('Network error: ' + err.message);
-    }
-  }
-</script>
 
 <main>
 

@@ -22,36 +22,29 @@
       position: relative;
     }
 
-    .venmo-widget {
+    .venmo-btn {
       position: absolute;
       left: 24px;
       top: 50%;
       transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      text-align: center;
-    }
-
-    .venmo-widget img {
-      width: 84px;
-      height: 84px;
-      border-radius: 6px;
-      background: #fff;
-      padding: 4px;
-    }
-
-    .venmo-widget span {
       font-family: sans-serif;
-      font-size: 0.65rem;
-      color: #b0afc0;
-      max-width: 90px;
-      line-height: 1.4;
+      font-size: 0.72rem;
+      color: #8888aa;
+      text-decoration: none;
+      border: 1px solid #3a3a5c;
+      border-radius: 20px;
+      padding: 5px 12px;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .venmo-btn:hover {
+      color: #c0bfff;
+      border-color: #6666aa;
     }
 
     @media (max-width: 640px) {
-      .venmo-widget { display: none; }
+      .venmo-btn { display: none; }
     }
 
     header h1 {
@@ -456,10 +449,7 @@
 <body>
 
 <header>
-  <div class="venmo-widget">
-    <img src="venmo-qr.png" alt="Venmo QR Code" />
-    <span>support my next big idea with a small tip</span>
-  </div>
+  <a class="venmo-btn" href="https://venmo.com/Jordan-Jones-Hawkpanther" target="_blank">💙 tip me on venmo</a>
   <h1>US–Israel Strikes on Iran: A Balanced Overview</h1>
   <p class="subtitle">Arguments For and Against — presented without political bias</p>
 </header>

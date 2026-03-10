@@ -449,6 +449,26 @@
       margin-top: 28px;
       font-style: italic;
     }
+
+    /* ── Consensus History Chart ── */
+    .consensus-inner {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+    .consensus-meter-col { flex: 1 1 0; min-width: 0; }
+    .consensus-chart-col { flex: 1 1 0; min-width: 0; }
+    .consensus-chart-label {
+      font-size: 0.75rem;
+      color: #888;
+      text-align: center;
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+    @media (max-width: 640px) {
+      .consensus-inner { flex-direction: column; }
+    }
   </style>
 </head>
 <body>
@@ -515,22 +535,31 @@
       Based on reactions from governments, international bodies, and independent think tanks (CFR, Chatham House, Stimson Center, UN). This reflects where the preponderance of expert and official opinion falls — not a moral verdict.
     </p>
 
-    <div class="meter-labels">
-      <span>← Broadly Supported</span>
-      <span>Broadly Opposed →</span>
-    </div>
+    <div class="consensus-inner">
+      <div class="consensus-meter-col">
+        <div class="meter-labels">
+          <span>← Broadly Supported</span>
+          <span>Broadly Opposed →</span>
+        </div>
 
-    <!-- METER_POSITION: 72% -->
-    <div class="meter-track">
-      <div class="meter-marker" style="left: 72%;"></div>
-    </div>
+        <!-- METER_POSITION: 72% -->
+        <div class="meter-track">
+          <div class="meter-marker" style="left: 72%;"></div>
+        </div>
 
-    <!-- BEGIN_CONSENSUS_VERDICT -->
+        <!-- BEGIN_CONSENSUS_VERDICT -->
 <div class="meter-value-label">
       <div class="verdict">Leaning Opposed (~72%)</div>
       <div class="verdict-sub">International relations scholars and legal experts largely oppose the war, citing unclear objectives, escalation risks, and international law violations, though military operations have achieved tactical successes.</div>
     </div>
 <!-- END_CONSENSUS_VERDICT -->
+      </div>
+
+      <div class="consensus-chart-col">
+        <div class="consensus-chart-label">% Broadly Opposed — history by day</div>
+        <canvas id="consensusChart"></canvas>
+      </div>
+    </div>
 
     <!-- BEGIN_CONSENSUS_BREAKDOWN -->
 <span class="chip oppose">IR Scholars: ~85% disapprove (TRIP survey of 949 experts)</span><span class="chip oppose">International Law: "Widely considered illegal" - UN Rapporteur</span><span class="chip oppose">US Public: 75% oppose (Reuters/IPSOS)</span><span class="chip support">Israeli Public: 82% support (IDI)</span><span class="chip mixed">Military Analysts: Tactical success but unclear endgame</span><span class="chip oppose">Economic Analysts: Warn of global recession risk</span>
@@ -567,5 +596,73 @@
 
 </main>
 
+
+<!-- BEGIN_CONSENSUS_HISTORY -->
+<script>
+const consensusHistory = [
+  {"date":"2026-03-03","value":62},
+  {"date":"2026-03-04","value":65},
+  {"date":"2026-03-05","value":65},
+  {"date":"2026-03-06","value":62},
+  {"date":"2026-03-07","value":72},
+  {"date":"2026-03-08","value":68},
+  {"date":"2026-03-09","value":72}
+];
+</script>
+<!-- END_CONSENSUS_HISTORY -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script>
+(function() {
+  var ctx = document.getElementById('consensusChart');
+  if (!ctx || typeof Chart === 'undefined') return;
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: consensusHistory.map(function(d) {
+        var dt = new Date(d.date + 'T12:00:00');
+        return (dt.getMonth() + 1) + '/' + dt.getDate();
+      }),
+      datasets: [{
+        data: consensusHistory.map(function(d) { return d.value; }),
+        borderColor: '#c62828',
+        backgroundColor: 'rgba(198,40,40,0.10)',
+        fill: true,
+        tension: 0.35,
+        pointBackgroundColor: '#c62828',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(c) { return c.parsed.y + '% opposed'; }
+          }
+        }
+      },
+      scales: {
+        y: {
+          min: 0,
+          max: 100,
+          ticks: {
+            callback: function(v) { return v + '%'; },
+            font: { size: 10 },
+            stepSize: 25
+          },
+          grid: { color: 'rgba(0,0,0,0.06)' }
+        },
+        x: {
+          ticks: { font: { size: 10 } },
+          grid: { display: false }
+        }
+      }
+    }
+  });
+})();
+</script>
 </body>
 </html>

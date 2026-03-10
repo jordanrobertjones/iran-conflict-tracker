@@ -1,9 +1,9 @@
 name: Daily Iran Conflict Update
 
 on:
-  # Runs at 5:00 AM Mountain Time (12:00 UTC during MDT, 13:00 UTC during MST)
+  # Runs at 5:00 AM Mountain Time (11:00 UTC during MDT/summer, 12:00 UTC during MST/winter)
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 11 * * *'
 
   # Allows manual "Update Now" trigger from the GitHub Actions UI
   workflow_dispatch:

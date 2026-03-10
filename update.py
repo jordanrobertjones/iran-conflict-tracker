@@ -121,6 +121,22 @@ if updates.get("consensus_position") is not None:
     html = re.sub(r'<!-- METER_POSITION: \d+% -->', f'<!-- METER_POSITION: {pos}% -->', html)
     html = re.sub(r'style="left: \d+%;"', f'style="left: {pos}%;"', html)
 
+    # Update consensus history chart data
+    history_match = re.search(
+        r'<!-- BEGIN_CONSENSUS_HISTORY -->\s*<script>\s*const consensusHistory = (\[[\s\S]*?\]);\s*</script>\s*<!-- END_CONSENSUS_HISTORY -->',
+        html
+    )
+    if history_match:
+        existing_history = json.loads(history_match.group(1))
+        existing_history = [e for e in existing_history if e.get("date") != today]
+        existing_history.append({"date": today, "value": pos})
+        existing_history.sort(key=lambda e: e["date"])
+        entries_js = ",\n  ".join(
+            f'{{"date":"{e["date"]}","value":{e["value"]}}}' for e in existing_history
+        )
+        new_block = f'<script>\nconst consensusHistory = [\n  {entries_js}\n];\n</script>'
+        html = replace_between(html, '<!-- BEGIN_CONSENSUS_HISTORY -->', '<!-- END_CONSENSUS_HISTORY -->', new_block)
+
 if updates.get("consensus_verdict"):
     verdict_html = f'''<div class="meter-value-label">
       <div class="verdict">{updates["consensus_verdict"]}</div>

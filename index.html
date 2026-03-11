@@ -556,7 +556,7 @@
       </div>
 
       <div class="consensus-chart-col">
-        <div class="consensus-chart-label">% Broadly Opposed — history by day</div>
+        <div class="consensus-chart-label">Consensus score by day (+100 = fully supported, −100 = fully opposed)</div>
         <canvas id="consensusChart"></canvas>
       </div>
     </div>
@@ -613,6 +613,7 @@ const consensusHistory = [
 <!-- END_CONSENSUS_HISTORY -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <script>
+<script>
 (function() {
   var ctx = document.getElementById('consensusChart');
   if (!ctx || typeof Chart === 'undefined') return;
@@ -624,12 +625,25 @@ const consensusHistory = [
         return (dt.getMonth() + 1) + '/' + dt.getDate();
       }),
       datasets: [{
-        data: consensusHistory.map(function(d) { return d.value; }),
-        borderColor: '#c62828',
-        backgroundColor: 'rgba(198,40,40,0.10)',
+        data: consensusHistory.map(function(d) { return (50 - d.value) * 2; }),
+        borderColor: '#555',
+        backgroundColor: function(context) {
+          var chart = context.chart;
+          var ctx2 = chart.ctx;
+          var area = chart.chartArea;
+          if (!area) return 'rgba(0,0,0,0)';
+          var gradient = ctx2.createLinearGradient(0, area.top, 0, area.bottom);
+          gradient.addColorStop(0, 'rgba(46,125,50,0.18)');
+          gradient.addColorStop(0.5, 'rgba(0,0,0,0)');
+          gradient.addColorStop(1, 'rgba(198,40,40,0.18)');
+          return gradient;
+        },
         fill: true,
         tension: 0.35,
-        pointBackgroundColor: '#c62828',
+        pointBackgroundColor: function(context) {
+          var v = context.parsed ? context.parsed.y : 0;
+          return v >= 0 ? '#2e7d32' : '#c62828';
+        },
         pointRadius: 4,
         pointHoverRadius: 6,
         borderWidth: 2
@@ -641,20 +655,32 @@ const consensusHistory = [
         legend: { display: false },
         tooltip: {
           callbacks: {
-            label: function(c) { return c.parsed.y + '% opposed'; }
+            label: function(c) {
+              var v = Math.round(c.parsed.y);
+              var sign = v > 0 ? '+' : '';
+              var label = v > 0 ? 'net supported' : v < 0 ? 'net opposed' : 'neutral';
+              return sign + v + ' (' + label + ')';
+            }
           }
         }
       },
       scales: {
         y: {
-          min: 0,
+          min: -100,
           max: 100,
           ticks: {
-            callback: function(v) { return v + '%'; },
+            callback: function(v) { return (v > 0 ? '+' : '') + v; },
             font: { size: 10 },
-            stepSize: 25
+            stepSize: 50
           },
-          grid: { color: 'rgba(0,0,0,0.06)' }
+          grid: {
+            color: function(context) {
+              return context.tick.value === 0 ? 'rgba(0,0,0,0.25)' : 'rgba(0,0,0,0.06)';
+            },
+            lineWidth: function(context) {
+              return context.tick.value === 0 ? 2 : 1;
+            }
+          }
         },
         x: {
           ticks: { font: { size: 10 } },
@@ -664,6 +690,7 @@ const consensusHistory = [
     }
   });
 })();
+</script>
 </script>
 </body>
 </html>

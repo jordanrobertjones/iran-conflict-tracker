@@ -65,7 +65,7 @@ Return a JSON object with these keys (only include keys where you have new infor
 
 print("Calling Claude with web search...")
 response = client.messages.create(
-    model="claude-opus-4-5-20251101",
+    model="claude-haiku-4-5-20251001",
     max_tokens=4096,
     system=SYSTEM,
     tools=[{"type": "web_search_20250305", "name": "web_search"}],

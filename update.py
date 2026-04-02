@@ -66,7 +66,7 @@ Return a JSON object with these keys (only include keys where you have new infor
 print("Calling Claude with web search...")
 response = client.messages.create(
     model="claude-sonnet-4-6",
-    max_tokens=4096,
+    max_tokens=8192,
     system=SYSTEM,
     tools=[{"type": "web_search_20250305", "name": "web_search"}],
     messages=[{"role": "user", "content": PROMPT}],
@@ -79,15 +79,15 @@ for block in response.content:
         raw += block.text
 
 # Parse JSON (handle possible markdown fences)
-# Strip markdown code fences if present
-raw_stripped = re.sub(r'```(?:json)?\s*', '', raw).strip()
-json_match = re.search(r'\{[\s\S]*\}', raw_stripped)
+# Try extracting from ```json ... ``` fence first, then fall back to bare { }
+fence_match = re.search(r'```(?:json)?\s*(\{[\s\S]*?\})\s*```', raw)
+json_match = fence_match or re.search(r'\{[\s\S]*\}', raw)
 if not json_match:
     print("ERROR: Could not find JSON in Claude response")
     print("Raw response:", raw[:500])
     exit(1)
 
-updates = json.loads(json_match.group())
+updates = json.loads(fence_match.group(1) if fence_match else json_match.group())
 print(f"Changes: {updates.get('summary_of_changes', 'None reported')}")
 
 # ── Load current HTML ────────────────────────────────────────────────────────

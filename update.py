@@ -79,7 +79,9 @@ for block in response.content:
         raw += block.text
 
 # Parse JSON (handle possible markdown fences)
-json_match = re.search(r'\{[\s\S]*\}', raw)
+# Strip markdown code fences if present
+raw_stripped = re.sub(r'```(?:json)?\s*', '', raw).strip()
+json_match = re.search(r'\{[\s\S]*\}', raw_stripped)
 if not json_match:
     print("ERROR: Could not find JSON in Claude response")
     print("Raw response:", raw[:500])
